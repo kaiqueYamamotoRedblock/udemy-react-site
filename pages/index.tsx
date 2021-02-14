@@ -2,9 +2,10 @@ import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 
 import { getPostsList } from '@shared/util'
-import Header from '@components/header'
 import Navigation from "@components/navigation"
 import Link from 'next/link'
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 type PostList = string[]
 
@@ -17,7 +18,6 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 
       <main>
         <Navigation />
-        <Header />
         {
           posts.length > 0 && (
             <ul>

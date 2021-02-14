@@ -1,8 +1,13 @@
 import { ReactNode } from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
-
-import styles from './Navigation.module.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Navbar,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+} from 'reactstrap';
 
 const LINK = [
   {
@@ -22,9 +27,11 @@ type NavArchor = {
 
 function NavArchor({ path, children}: NavArchor) {
   return (
-    <Link href={path}>
-      <a className={styles.navAnchor}> {children} </a>
-    </Link>
+    <NavItem>
+      <NavLink href={path}>
+        <a> {children} </a>
+      </NavLink>
+    </NavItem>
   )
 }
 
@@ -32,17 +39,20 @@ export default function Navigation() {
   const { pathname } = useRouter()
 
   return(
-    <nav>
-      <ul className={styles.list}>
-        {LINK.map(({ name, path }) => (
-          <li key={path}> 
-            { path === pathname
-            ? <span>{name}</span>
-            : <NavArchor path={path}>{name}</NavArchor> 
-            }
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div>
+      <Navbar color="light" light expand="md">
+        <NavbarBrand href="/">Blog NextJS</NavbarBrand>
+        <Nav className="mr-auto" navbar>
+          {LINK.map(({ name, path }) => (
+            <li key={path}> 
+              { path === pathname
+              ? <NavArchor path={path}>{name}</NavArchor> 
+              : <NavArchor path={path}>{name}</NavArchor> 
+              }
+            </li>
+          ))}
+        </Nav> 
+      </Navbar>
+    </div>
   )
 }
