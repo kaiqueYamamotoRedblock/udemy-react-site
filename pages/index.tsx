@@ -1,12 +1,20 @@
-import { InferGetStaticPropsType } from 'next'
-import Head from 'next/head'
+import { InferGetStaticPropsType } from "next";
+import Head from "next/head";
 
-import { getPostsList } from '@shared/util'
-import Header from '@components/header'
-import Navigation from "@components/navigation"
-import Link from 'next/link'
+import { getPostsList } from "@shared/util";
+import Navigation from "@components/navigation";
+import Link from "next/link";
 
-type PostList = string[]
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  Card,
+  CardBody,
+  Table,
+  Row,
+  Col,
+} from "reactstrap";
+
+type PostList = string[];
 
 function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
@@ -14,38 +22,43 @@ function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
       <Head>
         <title>Create Next App</title>
       </Head>
-
-      <main>
-        <Navigation />
-        <Header />
-        {
-          posts.length > 0 && (
-            <ul>
-              { posts.map((slug) => ( 
-                <li key={slug}>
-                  <Link href={`posts/${slug}`}>
-                    <a>
-                      {slug.split('-').join(' ')}
-                    </a>
-                  </Link>
-                </li>
-              ))} 
-            </ul>
-          )
-        }
-      </main>
-
+      <Navigation />
+      <div className="content">
+        <Row>
+          <Col xs={12}>
+            <Card>
+              <CardBody>
+                <Table responsive>
+                  <thead className="text-primary">
+                    {posts.length > 0 && (
+                      <tr>
+                        {posts.map((slug) => (
+                          <th key={slug}>
+                            <Link href={`posts/${slug}`}>
+                              <a>{slug.split("-").join(" ")}</a>
+                            </Link>
+                          </th>
+                        ))}
+                      </tr>
+                    )}
+                  </thead>
+                </Table>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </div>
     </>
-  )
+  );
 }
 
 export const getStaticProps = async () => {
-  const posts:PostList = getPostsList()
+  const posts: PostList = getPostsList();
   return {
     props: {
-      posts
-    }
-  }
-}
+      posts,
+    },
+  };
+};
 
-export default Home
+export default Home;

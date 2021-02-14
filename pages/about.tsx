@@ -1,12 +1,17 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from '@components/navigation'
-
+import { Col, Row } from 'reactstrap'
 export default function About() {
   return (
     <>
       <Navigation />
-      <header>
-        <h2> Hello from about page </h2>
-      </header>
+      <div className="content">
+        <Row>
+          <Col xs={12}>
+            <h1>About Page</h1>
+          </Col>
+        </Row>
+      </div>
     </>
   )
 }
